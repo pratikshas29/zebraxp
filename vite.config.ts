@@ -6,6 +6,7 @@ export default defineConfig({
   assetsInclude: ["**/*.HTML"],
   server: {
     port: 5175,
+       host: true,
     strictPort: true,
     headers: {
       'Cross-Origin-Opener-Policy': 'same-origin',

@@ -45,7 +45,7 @@ const AboutUs = () => {
 
 	return (
 		<motion.div
-			className="flex flex-col bg-white mt-24 lg:mt-36"
+			className="flex flex-col bg-white pt-28 mb-12"
 			initial="hidden"
 			animate="visible"
 			variants={containerVariants}
@@ -116,7 +116,7 @@ const AboutUs = () => {
 
 				{/* Section 3 */}
 				<motion.div
-					className="flex flex-col lg:flex-row items-start lg:items-center max-w-7xl mb-16 lg:mb-24 mx-auto px-5 gap-8 lg:gap-16"
+					className="flex flex-col lg:flex-row items-start lg:items-center max-w-7xl mx-auto px-5 gap-8 lg:gap-16"
 					initial="hidden"
 					whileInView="visible"
 					viewport={{ once: true, margin: "-100px" }}

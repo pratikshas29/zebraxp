@@ -13,11 +13,11 @@
     user-select: none;
   }
   svg {
-    /* border-radius: 12px; */
     background: #ffffff;
-    /* box-shadow: 0 4px 15px rgba(0,0,0,0.1); */
-    width: 670px;
-    height: 427px; /* Reduced height */
+    width: 100%;
+    height: auto;
+    max-width: 670px;
+    touch-action: none;
   }
   circle {
     cursor: pointer;
@@ -65,7 +65,7 @@
 </style>
 </head>
 <body>
-<svg id="diagram" viewBox="0 0 720 460" width="670" height="427" xmlns="http://www.w3.org/2000/svg" >
+<svg id="diagram" viewBox="0 0 720 460" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <radialGradient id="grad-blue" cx="50%" cy="50%" r="60%">
       <stop offset="0%" stop-color="#66a3ff"/>
@@ -144,6 +144,12 @@
   const connections = [];
   function addConnection(a,b,solid=true){
     connections.push({a,b,solid});
+  }
+  function pointFromEvent(e){
+    if (e.touches && e.touches.length) {
+      return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }
+    return { x: e.clientX, y: e.clientY };
   }
   function initNodes(){
     svg.querySelectorAll('circle').forEach(circ=>{
@@ -312,33 +318,44 @@
     });
     updateLines();
   }
-  function onMouseDown(e){
-    if(e.target.tagName.toLowerCase() !== 'circle') return;
+  function onPointerDown(e){
+    if((e.target.tagName || '').toLowerCase() !== 'circle') return;
+    e.preventDefault();
     const id = e.target.id;
     if(!nodes[id]) return;
     selectedNode = nodes[id];
-    prevMousePos = {x: e.clientX, y: e.clientY};
+    const p = pointFromEvent(e);
+    prevMousePos = {x: p.x, y: p.y};
     if(!selectedNode.velocity) selectedNode.velocity = {vx:0, vy:0};
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseup', onMouseUp);
+    window.addEventListener('mousemove', onPointerMove, { passive: false });
+    window.addEventListener('touchmove', onPointerMove, { passive: false });
+    window.addEventListener('mouseup', onPointerUp);
+    window.addEventListener('touchend', onPointerUp);
     animate();
   }
-  function onMouseMove(e){
+  function onPointerMove(e){
+    e.preventDefault();
     if(!selectedNode) return;
-    const dx = e.clientX - prevMousePos.x;
-    const dy = e.clientY - prevMousePos.y;
-    prevMousePos = {x: e.clientX, y: e.clientY};
+    const p = pointFromEvent(e);
+    const dx = p.x - prevMousePos.x;
+    const dy = p.y - prevMousePos.y;
+    prevMousePos = {x: p.x, y: p.y};
     selectedNode.x += dx;
     selectedNode.y += dy;
     selectedNode.velocity.vx = dx;
     selectedNode.velocity.vy = dy;
   }
-  function onMouseUp(){
+  function onPointerUp(){
     selectedNode = null;
-    window.removeEventListener('mousemove', onMouseMove);
-    window.removeEventListener('mouseup', onMouseUp);
+    window.removeEventListener('mousemove', onPointerMove);
+    window.removeEventListener('touchmove', onPointerMove);
+    window.removeEventListener('mouseup', onPointerUp);
+    window.removeEventListener('touchend', onPointerUp);
   }
-  svg.querySelectorAll('circle').forEach(c=>c.addEventListener('mousedown', onMouseDown));
+  svg.querySelectorAll('circle').forEach(c=>{
+    c.addEventListener('mousedown', onPointerDown);
+    c.addEventListener('touchstart', onPointerDown, { passive: false });
+  });
   updateLines();
 })();
 </script>

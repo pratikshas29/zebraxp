@@ -35,7 +35,7 @@ const Contact = () => {
 
 	return (
 		<motion.div 
-			className="flex flex-col bg-white mt-28 " 
+			className="flex flex-col bg-white  pt-28  " 
 			initial="hidden"
 			animate="visible"
 			variants={containerVariants}

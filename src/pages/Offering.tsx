@@ -238,10 +238,10 @@ const Offering = () => {
   };
 
   return (
-    <motion.div className="flex flex-col bg-white mt-24 lg:mt-36 mb-3" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+    <motion.div className="flex flex-col bg-white pt-28 mb-6 " initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
       <div className="self-stretch bg-white">
         <div className="flex flex-col items-start relative ">
-          <div className="flex flex-col self-stretch bg-white pb-6 gap-10">
+          <div className="flex flex-col self-stretch bg-white  gap-10">
             <motion.div 
               className="flex flex-col lg:flex-row w-full max-w-7xl mx-auto px-4 md:px-6 gap-0 lg:gap-12 " 
               initial="hidden"

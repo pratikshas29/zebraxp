@@ -8,7 +8,7 @@ import logo from "../assets/logo.png";
 const Header: React.FC = () => {
   const [open, setOpen] = useState(false);
   const handleReachUsClick = () => {
-    const n = "919999999999";
+    const n = "919820280144";
     const text = encodeURIComponent("Hello! I would like to connect.");
     const url = `https://wa.me/${n}?text=${text}`;
     window.open(url, "_blank");
@@ -29,7 +29,7 @@ const Header: React.FC = () => {
             <Link to="/" className="no-underline">
               <img
                 src={logo}
-                className="w-40 h-14 object-fill"
+                className="w-auto h-14 object-fill"
               />
             </Link>
           </motion.div>

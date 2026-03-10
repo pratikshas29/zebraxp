@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import bg from "../assets/bg-pettern.png";
@@ -70,12 +70,43 @@ const cards = [
 
 const Home = () => {
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const scrollerRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (typeof window !== "undefined" && window.innerWidth < 1024) {
       setExpandedId(0);
     }
+  }, []);
+
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const onScroll = () => {
+      if (window.innerWidth >= 1024) return;
+      const children = Array.from(el.children) as HTMLElement[];
+      if (children.length === 0) return;
+      const rect = el.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      let minDist = Number.POSITIVE_INFINITY;
+      let idx = 0;
+      for (let i = 0; i < children.length; i++) {
+        const r = children[i].getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const d = Math.abs(cx - centerX);
+        if (d < minDist) {
+          minDist = d;
+          idx = i;
+        }
+      }
+      setCurrentIndex(idx);
+      const card = cards[idx];
+      if (card) setExpandedId(card.id);
+    };
+    el.addEventListener("scroll", onScroll, { passive: true } as any);
+    onScroll();
+    return () => el.removeEventListener("scroll", onScroll as any);
   }, []);
 
   // Animation variants
@@ -119,7 +150,7 @@ const Home = () => {
 
   return (
     <motion.div
-      className="flex flex-col min-h-[calc(100vh-80px)] mt-12"
+      className="flex flex-col min-h-[calc(100vh-80px)] pt-28 mb-6"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -132,7 +163,7 @@ const Home = () => {
       {/* Hero Section */}
 
       <div
-        className="relative w-full flex flex-col items-center justify-center text-center px-4 pt-20 pb-12 overflow-hidden"
+        className="relative w-full flex flex-col items-center justify-center text-center px-4  pb-10 overflow-hidden"
       >
         <motion.div
           className="max-w-5xl mx-auto flex flex-col items-center relative z-10"
@@ -158,7 +189,7 @@ const Home = () => {
           {/* Headline */}
           <motion.h1 
             variants={itemVariants as any}
-            className="text-black font-extrabold text-3xl md:text-4xl mb-6 leading-snug md:leading-[1.2]"
+            className="text-black font-extrabold text-2xl md:text-4xl mb-6 leading-snug md:leading-[1.2]"
           >
             
             A complete Customer Engagement ecosystem for the entire customer journey.
@@ -169,7 +200,7 @@ const Home = () => {
           {/* Subtext */}
           <motion.div 
             variants={itemVariants as any}
-            className="flex flex-col gap-1 mb-10"
+            className="flex flex-col gap-1 mb-6"
           >
             <p className="text-black text-sm max-w-3xl mx-auto">
               A Customer Success and Engagement Platform: revolutionizing the future of retail - ‘phygital’.
@@ -237,6 +268,7 @@ const Home = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
+
         variants={{
           hidden: { opacity: 0 },
           visible: {
@@ -246,9 +278,12 @@ const Home = () => {
             },
           },
         }}
-        className="w-full pb-20 px-4 md:px-10"
+        className="w-full  px-4 md:px-10"
       >
-        <div className="max-w-7xl mx-auto flex gap-4 bg-white p-4 min-h-[300px] overflow-x-auto no-scrollbar xl:overflow-visible">
+        <div
+          ref={scrollerRef}
+          className="max-w-7xl mx-auto flex gap-4  p-4 min-h-[300px] overflow-x-auto no-scrollbar xl:overflow-visible snap-x snap-mandatory md:snap-none"
+        >
 
       {cards.map((card) => {
       const isExpanded = expandedId === card.id;
@@ -259,13 +294,15 @@ const Home = () => {
           layout
           onMouseEnter={() => setExpandedId(card.id)}
           onMouseLeave={() => setExpandedId(null)}
-          initial={false}
+          onClick={() => setExpandedId(card.id)}
+          variants={itemVariants as any}
+          viewport={{ once: true, amount: 0.2 }}
           animate={{
             flex: isExpanded ? 2.5 : 1
           }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
 
-          className={`relative flex flex-col justify-between p-6 rounded-[32px] cursor-pointer shadow-lg overflow-hidden h-[320px]
+          className={`relative flex flex-col justify-between p-6 rounded-[32px] cursor-pointer shadow-lg overflow-hidden h-[320px] snap-start
 
           min-w-[320px] sm:min-w-[320px] md:min-w-[400px] hover:shadow-lg hover:shadow-gray-400
 
@@ -367,6 +404,25 @@ const Home = () => {
       );
     })}
 
+  </div>
+  <div className="mt-4 flex justify-center gap-2 lg:hidden">
+    {cards.map((c, i) => (
+      <button
+        key={c.id}
+        onClick={() => {
+          const el = scrollerRef.current;
+          if (!el) return;
+          const child = el.children[i] as HTMLElement | undefined;
+          if (child) {
+            child.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+            setExpandedId(c.id);
+            setCurrentIndex(i);
+          }
+        }}
+        className={`w-2.5 h-2.5 rounded-full ${currentIndex === i ? "bg-brandDark" : "bg-gray-300"}`}
+        aria-label={`Go to card ${i + 1}`}
+      />
+    ))}
   </div>
 </motion.div>
     </motion.div>

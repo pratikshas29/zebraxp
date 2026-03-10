@@ -4,12 +4,13 @@ import tenetsImage from "../assets/tenets-1.jpg";
 import tenetsImage2 from "../assets/tenets-2.jpg";
 import tenetsImage3 from "../assets/tenets-3.jpg";
 import tenetsImage4 from "../assets/tenets-4.jpg";
-import lock from "../assets/lock.png";
+import { HiLockClosed, HiShieldCheck, HiSquares2X2 } from "react-icons/hi2";
 const cards = [
   {
     id: 1,
     title: "Secured",
     image: tenetsImage,
+    icon: HiLockClosed,
     desc: "Your data stays protected at every layer from user access to infrastructure. ZebraXP ensures confidential information is encrypted, isolated, and monitored.",
     list: ["Encrypted data.", "PII protection.", "Secured instance.", "Access controls."],
   },
@@ -17,6 +18,7 @@ const cards = [
     id: 2,
     title: "Reliable & Compliant",
     image: tenetsImage2,
+    icon: HiShieldCheck,
     desc: "ZebraXP is engineered for uninterrupted business performance. With enterprise-grade uptime and built-in compliance, it keeps your operations running smoothly while meeting global security and regulatory standards.",
     list: ["99.99% uptime.", "Failover mechanism.", "Data backup.", "GDPR, HIPPA."],
   },
@@ -24,6 +26,7 @@ const cards = [
     id: 3,
     title: "Modular",
     image: tenetsImage3,
+    icon: HiSquares2X2,
     desc: "Every business is different - ZebraXP adapts to yours. Use only the modules you need today and expand anytime, without rebuilding or replacing your existing system. Scalability is built into the core.",
     list: ["Use what is applicable. All features configurable and customized to your need.", "Plug latest technologies into the platform instead of changing solutions. Framework that enables latest technology upgrade seamlessly."],
   },
@@ -71,7 +74,7 @@ const Tenets = () => {
 
   return (
     <motion.div 
-      className="max-w-7xl mx-auto px-6 mt-24 lg:mt-36 mb-20 relative"
+      className="max-w-7xl mx-auto pt-28 mb-6 px-5 relative"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -104,10 +107,10 @@ const Tenets = () => {
                     alt=""
                   />
 
-                  <div className="flex flex-col justify-center px-12 md:px-0 md:pr-6">
+                  <div className="flex flex-col justify-center px-4 md:px-0 md:pr-6">
                     <div className="flex items-center mb-5 gap-4">
                       <div className="bg-brandPurple p-2 rounded-lg">
-                        <img src={lock} className="w-8 h-8" alt="" />
+                        <card.icon className="w-8 h-8 text-white" />
                       </div>
                       <span className="text-brandDark text-xl sm:text-2xl font-bold">
                         {card.title}
