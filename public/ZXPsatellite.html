@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Elastic Business Parameters Network - Reduced Height</title>
+<style>
+  body {
+    margin: 0; height: 100vh;
+    display: flex; justify-content: center; align-items: center;
+    background-color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none;
+  }
+  svg {
+    /* border-radius: 12px; */
+    background: #ffffff;
+    /* box-shadow: 0 4px 15px rgba(0,0,0,0.1); */
+    width: 670px;
+    height: 427px; /* Reduced height */
+  }
+  circle {
+    cursor: pointer;
+    transition: filter 0.3s;
+  }
+  circle:hover {
+    filter: drop-shadow(0 0 12px rgba(255,165,0,0.85));
+  }
+  line {
+    stroke-linecap: round;
+    transition: stroke-width 0.3s, opacity 0.3s;
+  }
+  line:hover {
+    stroke-width: 3.5;
+    opacity: 1;
+  }
+  /* Node styles - unchanged */
+  .main-node-cost { stroke: #135aba; stroke-width: 2.4; fill: url(#grad-blue); filter: drop-shadow(0 0 4.8px rgba(30,136,229,0.4)); }
+  .main-node-advocacy { stroke: #a02722; stroke-width:2.4; fill: url(#grad-red); filter: drop-shadow(0 0 4.8px rgba(229,57,53,0.4)); }
+  .main-node-service { stroke: #2f6c32; stroke-width: 2.4; fill: url(#grad-green); filter: drop-shadow(0 0 4.8px rgba(67,160,71,0.4)); }
+  .main-node-campaign { stroke: #c56a00; stroke-width: 2.4; fill: url(#grad-orange); filter: drop-shadow(0 0 4.8px rgba(251,140,0,0.4)); }
+  .main-node-digital { stroke: #5e1572; stroke-width: 2.4; fill: url(#grad-purple); filter: drop-shadow(0 0 4.8px rgba(142,36,170,0.4)); }
+  .sub-node-cost { fill: #90caf9; stroke: #135aba; stroke-width: 1.44; filter: drop-shadow(0 1px 1.2px rgba(30,136,229,0.2)); }
+  .sub-node-advocacy { fill: #ef9a9a; stroke: #a02722; stroke-width:1.44; filter: drop-shadow(0 1px 1.2px rgba(229,57,53,0.2)); }
+  .sub-node-service { fill: #a5d6a7; stroke: #2f6c32; stroke-width:1.44; filter: drop-shadow(0 1px 1.2px rgba(67,160,71,0.2)); }
+  .sub-node-campaign { fill: #ffcc80; stroke: #c56a00; stroke-width:1.44; filter: drop-shadow(0 1px 1.2px rgba(251,140,0,0.2)); }
+  .sub-node-digital { fill: #ce93d8; stroke: #5e1572; stroke-width:1.44; filter: drop-shadow(0 1px 1.2px rgba(142,36,170,0.2)); }
+  .line-cost { stroke: #5588e8; }
+  .line-advocacy { stroke: #e8706a; }
+  .line-service { stroke: #72b479; }
+  .line-campaign { stroke: #ffb954; }
+  .line-digital { stroke: #aa80d2; }
+  .dotted-connection { stroke: #999; stroke-width: 1.2; stroke-dasharray: 4.8 4.8; opacity: 0.4; }
+  text.main-text {
+    fill: #222; font-weight: 700; font-size: 14.2px;
+    text-shadow: 0 0 1.6px rgba(255,255,255,0.8);
+    user-select:none;
+    pointer-events:none;
+  }
+  text.sub-text {
+    fill: #000; font-weight: 600; font-size: 11.8px;
+    user-select:none;
+    pointer-events:none;
+  }
+</style>
+</head>
+<body>
+<svg id="diagram" viewBox="0 0 720 460" width="670" height="427" xmlns="http://www.w3.org/2000/svg" >
+  <defs>
+    <radialGradient id="grad-blue" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#66a3ff"/>
+      <stop offset="100%" stop-color="#1e88e5"/>
+    </radialGradient>
+    <radialGradient id="grad-red" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ff7c77"/>
+      <stop offset="100%" stop-color="#e53935"/>
+    </radialGradient>
+    <radialGradient id="grad-green" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#90d48d"/>
+      <stop offset="100%" stop-color="#43a047"/>
+    </radialGradient>
+    <radialGradient id="grad-orange" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ffbc57"/>
+      <stop offset="100%" stop-color="#fb8c00"/>
+    </radialGradient>
+    <radialGradient id="grad-purple" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#c194d9"/>
+      <stop offset="100%" stop-color="#8e24aa"/>
+    </radialGradient>
+  </defs>
+  <!-- Circles -->
+  <circle id="main-cost" class="main-node-cost" cx="112" cy="96" r="32" />
+  <circle id="main-advocacy" class="main-node-advocacy" cx="352" cy="88" r="32" />
+  <circle id="main-service" class="main-node-service" cx="584" cy="88" r="32" />
+  <circle id="main-campaign" class="main-node-campaign" cx="216" cy="344" r="32" />
+  <circle id="main-digital" class="main-node-digital" cx="480" cy="360" r="32" />
+  <circle id="cost-1" class="sub-node-cost" cx="70" cy="36" r="20" />
+  <circle id="cost-2" class="sub-node-cost" cx="88" cy="148" r="18.4" />
+  <circle id="cost-3" class="sub-node-cost" cx="152" cy="184" r="18.4" />
+  <circle id="advocacy-1" class="sub-node-advocacy" cx="272" cy="36" r="20" />
+  <circle id="advocacy-2" class="sub-node-advocacy" cx="332" cy="156" r="20" />
+  <circle id="advocacy-3" class="sub-node-advocacy" cx="384" cy="184" r="20" />
+  <circle id="advocacy-4" class="sub-node-advocacy" cx="424" cy="148" r="20" />
+  <circle id="service-1" class="sub-node-service" cx="532" cy="40" r="20" />
+  <circle id="service-2" class="sub-node-service" cx="632" cy="40" r="20" />
+  <circle id="service-3" class="sub-node-service" cx="532" cy="172" r="18.4" />
+  <circle id="service-4" class="sub-node-service" cx="628" cy="156" r="18.4" />
+  <circle id="service-5" class="sub-node-service" cx="584" cy="184" r="18.4" />
+  <circle id="campaign-1" class="sub-node-campaign" cx="152" cy="280" r="20" />
+  <circle id="campaign-2" class="sub-node-campaign" cx="264" cy="368" r="18.4" />
+  <circle id="campaign-3" class="sub-node-campaign" cx="288" cy="312" r="18.4" />
+  <circle id="digital-1" class="sub-node-digital" cx="424" cy="324" r="20" />
+  <circle id="digital-2" class="sub-node-digital" cx="480" cy="440" r="18.4" />
+  <circle id="digital-3" class="sub-node-digital" cx="536" cy="304" r="18.4" />
+  <!-- Text with fixed IDs -->
+  <text id="main-cost-text" x="112" y="96" text-anchor="middle" dominant-baseline="middle" class="main-text">Cost &amp; Revenue</text>
+  <text id="main-advocacy-text" x="352" y="88" text-anchor="middle" dominant-baseline="middle" class="main-text">Customer Advocacy</text>
+  <text id="main-service-text" x="584" y="88" text-anchor="middle" dominant-baseline="middle" class="main-text">Customer Service</text>
+  <text id="main-campaign-text" x="216" y="344" text-anchor="middle" dominant-baseline="middle" class="main-text">Campaigns</text>
+  <text id="main-digital-text" x="480" y="360" text-anchor="middle" dominant-baseline="middle" class="main-text">Digital Transformation</text>
+  <text id="cost-1-text" x="70" y="36" text-anchor="middle" dominant-baseline="middle" class="sub-text">Cost of doing business</text>
+  <text id="cost-2-text" x="88" y="148" text-anchor="middle" dominant-baseline="middle" class="sub-text">Revenue</text>
+  <text id="cost-3-text" x="152" y="184" text-anchor="middle" dominant-baseline="middle" class="sub-text">ARPU</text>
+  <text id="advocacy-1-text" x="272" y="36" text-anchor="middle" dominant-baseline="middle" class="sub-text">Rating</text>
+  <text id="advocacy-2-text" x="332" y="156" text-anchor="middle" dominant-baseline="middle" class="sub-text">Feedback</text>
+  <text id="advocacy-3-text" x="384" y="184" text-anchor="middle" dominant-baseline="middle" class="sub-text">Customer Sentiment</text>
+  <text id="advocacy-4-text" x="424" y="148" text-anchor="middle" dominant-baseline="middle" class="sub-text">NPS</text>
+  <text id="service-1-text" x="532" y="40" text-anchor="middle" dominant-baseline="middle" class="sub-text">Complaints</text>
+  <text id="service-2-text" x="632" y="40" text-anchor="middle" dominant-baseline="middle" class="sub-text">Self Service</text>
+  <text id="service-3-text" x="532" y="172" text-anchor="middle" dominant-baseline="middle" class="sub-text">Time to Acknowledge</text>
+  <text id="service-4-text" x="628" y="156" text-anchor="middle" dominant-baseline="middle" class="sub-text">Resolution Accuracy</text>
+  <text id="service-5-text" x="584" y="184" text-anchor="middle" dominant-baseline="middle" class="sub-text">CSAT</text>
+  <text id="campaign-1-text" x="152" y="280" text-anchor="middle" dominant-baseline="middle" class="sub-text">Campaign Spend</text>
+  <text id="campaign-2-text" x="264" y="368" text-anchor="middle" dominant-baseline="middle" class="sub-text">Engagement Rate</text>
+  <text id="campaign-3-text" x="288" y="312" text-anchor="middle" dominant-baseline="middle" class="sub-text">Conversions</text>
+  <text id="digital-1-text" x="424" y="324" text-anchor="middle" dominant-baseline="middle" class="sub-text">Processes Automated</text>
+  <text id="digital-2-text" x="480" y="440" text-anchor="middle" dominant-baseline="middle" class="sub-text">Transactions Digitized</text>
+  <text id="digital-3-text" x="536" y="304" text-anchor="middle" dominant-baseline="middle" class="sub-text">AI Enablement</text>
+</svg>
+<script>
+(() => {
+  const svg = document.getElementById('diagram');
+  const nodes = {};
+  const connections = [];
+  function addConnection(a,b,solid=true){
+    connections.push({a,b,solid});
+  }
+  function initNodes(){
+    svg.querySelectorAll('circle').forEach(circ=>{
+      nodes[circ.id] = {
+        id:circ.id,
+        circle: circ,
+        x: circ.cx.baseVal.value,
+        y: circ.cy.baseVal.value,
+        originalX: circ.cx.baseVal.value,
+        originalY: circ.cy.baseVal.value,
+        connections: [],
+        velocity: {vx:0, vy:0}
+      };
+    });
+    const groups = {
+      'main-cost': ['cost-1','cost-2','cost-3'],
+      'main-advocacy': ['advocacy-1','advocacy-2','advocacy-3','advocacy-4'],
+      'main-service': ['service-1','service-2','service-3','service-4','service-5'],
+      'main-campaign': ['campaign-1','campaign-2','campaign-3'],
+      'main-digital': ['digital-1','digital-2','digital-3'],
+    };
+    Object.entries(groups).forEach(([main,subs])=>{
+      subs.forEach(sub=>{
+        nodes[main].connections.push(sub);
+        nodes[sub].connections.push(main);
+        addConnection(main,sub,true);
+      });
+    });
+    const mainNodes = Object.keys(groups);
+    for(let i=0; i<mainNodes.length; i++){
+      for(let j=i+1; j<mainNodes.length; j++){
+        addConnection(mainNodes[i],mainNodes[j],false);
+        nodes[mainNodes[i]].connections.push(mainNodes[j]);
+        nodes[mainNodes[j]].connections.push(mainNodes[i]);
+      }
+    }
+  }
+  initNodes();
+  const restLengths = {};
+  function computeRestLengths(){
+    connections.forEach(({a,b})=>{
+      const nA=nodes[a], nB=nodes[b];
+      let dx = nB.originalX - nA.originalX;
+      let dy = nB.originalY - nA.originalY;
+      let length = Math.sqrt(dx*dx + dy*dy);
+      if ((a === 'main-cost' && b === 'cost-1') || (a === 'cost-1' && b === 'main-cost')) {
+        length *= 0.5;
+      }
+      else if ((a === 'main-campaign' && b === 'campaign-2') || (a === 'campaign-2' && b === 'main-campaign')) {
+        length *= 1.5;
+      }
+      else if ((a === 'main-campaign' && b === 'campaign-1') || (a === 'campaign-1' && b === 'main-campaign')) {
+        length *= 0.9;
+      }
+      else if ((a === 'main-cost' && b === 'cost-3') || (a === 'cost-3' && b === 'main-cost')) {
+        length *= 0.9;
+      }
+      else if ((a === 'main-advocacy' && b === 'advocacy-1') || (a === 'advocacy-1' && b === 'main-advocacy')) {
+        length *= 0.8;
+      }
+      restLengths[`${a}_${b}`] = length;
+      restLengths[`${b}_${a}`] = length;
+    });
+  }
+  computeRestLengths();
+  const lines = [];
+  function createLine(a,b,solid){
+    const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.classList.add(solid ? 'line-cost' : 'dotted-connection');
+    line.setAttribute('stroke-linecap','round');
+    if(!solid){
+      line.setAttribute('stroke-dasharray','6 6');
+      line.setAttribute('stroke-width','1.5');
+      line.setAttribute('stroke','#999');
+    } else {
+      const colorMap={'cost':'#5588e8','advocacy':'#e8706a','service':'#72b479','campaign':'#ffb954','digital':'#aa80d2'};
+      let groupColor='#777';
+      if(a.includes('cost')||b.includes('cost')) groupColor=colorMap['cost'];
+      else if(a.includes('advocacy')||b.includes('advocacy')) groupColor=colorMap['advocacy'];
+      else if(a.includes('service')||b.includes('service')) groupColor=colorMap['service'];
+      else if(a.includes('campaign')||b.includes('campaign')) groupColor=colorMap['campaign'];
+      else if(a.includes('digital')||b.includes('digital')) groupColor=colorMap['digital'];
+      line.setAttribute('stroke',groupColor);
+      line.setAttribute('stroke-width','2.5');
+    }
+    svg.insertBefore(line, svg.firstChild);
+    lines.push({line,a,b});
+  }
+  connections.forEach(({a,b,solid})=>createLine(a,b,solid));
+  function updateLines(){
+    lines.forEach(({line,a,b})=>{
+      const nA = nodes[a], nB = nodes[b];
+      if(!nA || !nB) return;
+      const dx = nB.x - nA.x;
+      const dy = nB.y - nA.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if(dist === 0){
+        line.setAttribute('x1', nA.x);
+        line.setAttribute('y1', nA.y);
+        line.setAttribute('x2', nA.x);
+        line.setAttribute('y2', nA.y);
+        return;
+      }
+      const ux = dx / dist;
+      const uy = dy / dist;
+      const restLength = restLengths[`${a}_${b}`] || dist;
+      const stretchRatio = Math.min(1.3, 1 + 0.3 * Math.abs(dist - restLength) / restLength);
+      const extension = (restLength * (stretchRatio - 1)) / 2;
+      const startX = nA.x + ux * (nA.circle.r.baseVal.value - extension);
+      const startY = nA.y + uy * (nA.circle.r.baseVal.value - extension);
+      const endX = nB.x - ux * (nB.circle.r.baseVal.value - extension);
+      const endY = nB.y - uy * (nB.circle.r.baseVal.value - extension);
+      line.setAttribute('x1', startX);
+      line.setAttribute('y1', startY);
+      line.setAttribute('x2', endX);
+      line.setAttribute('y2', endY);
+    });
+  }
+  let selectedNode = null;
+  let prevMousePos = null;
+  const springK = 0.1;
+  const damping = 0.85;
+  function animate(){
+    if(selectedNode) requestAnimationFrame(animate);
+    for(const id in nodes){
+      const node = nodes[id];
+      if(selectedNode && id === selectedNode.id) continue;
+      let ax = 0, ay = 0;
+      node.connections.forEach(cid=>{
+        const c = nodes[cid];
+        const dx = c.x - node.x;
+        const dy = c.y - node.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist === 0) return;
+        const restLength = restLengths[`${id}_${cid}`] || dist;
+        const displacement = dist - restLength;
+        const force = springK * displacement;
+        ax += force * dx/dist;
+        ay += force * dy/dist;
+      });
+      if(!node.velocity) node.velocity = {vx:0, vy:0};
+      node.velocity.vx = damping * (node.velocity.vx + ax);
+      node.velocity.vy = damping * (node.velocity.vy + ay);
+    }
+    for(const id in nodes){
+      if(selectedNode && id === selectedNode.id) continue;
+      const node = nodes[id];
+      node.x += node.velocity.vx;
+      node.y += node.velocity.vy;
+    }
+    for(const id in nodes){
+      const node = nodes[id];
+      node.circle.cx.baseVal.value = node.x;
+      node.circle.cy.baseVal.value = node.y;
+    }
+    // Move text strictly linked by ID to corresponding circle
+    svg.querySelectorAll('text').forEach(t=>{
+      const textId = t.id;
+      if(!textId) return;
+      const associatedId = textId.replace(/-text$/,'');
+      const node = nodes[associatedId];
+      if(node){
+        t.setAttribute('x', node.x);
+        t.setAttribute('y', node.y);
+      }
+    });
+    updateLines();
+  }
+  function onMouseDown(e){
+    if(e.target.tagName.toLowerCase() !== 'circle') return;
+    const id = e.target.id;
+    if(!nodes[id]) return;
+    selectedNode = nodes[id];
+    prevMousePos = {x: e.clientX, y: e.clientY};
+    if(!selectedNode.velocity) selectedNode.velocity = {vx:0, vy:0};
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+    animate();
+  }
+  function onMouseMove(e){
+    if(!selectedNode) return;
+    const dx = e.clientX - prevMousePos.x;
+    const dy = e.clientY - prevMousePos.y;
+    prevMousePos = {x: e.clientX, y: e.clientY};
+    selectedNode.x += dx;
+    selectedNode.y += dy;
+    selectedNode.velocity.vx = dx;
+    selectedNode.velocity.vy = dy;
+  }
+  function onMouseUp(){
+    selectedNode = null;
+    window.removeEventListener('mousemove', onMouseMove);
+    window.removeEventListener('mouseup', onMouseUp);
+  }
+  svg.querySelectorAll('circle').forEach(c=>c.addEventListener('mousedown', onMouseDown));
+  updateLines();
+})();
+</script>
+</body>
+</html>
