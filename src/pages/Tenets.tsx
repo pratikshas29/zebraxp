@@ -81,11 +81,7 @@ const Tenets = () => {
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <motion.div
-        key={isSmall ? startIndex : 0}
-        initial={isSmall ? { x: 24, opacity: 0 } : undefined}
-        animate={isSmall ? { x: 0, opacity: 1 } : undefined}
-        transition={isSmall ? { type: "spring", stiffness: 220, damping: 24 } : undefined}
-        className="flex flex-col md:flex-row gap-4 md:gap-6"
+        className="flex flex-col md:flex-row gap-4 md:gap-6 h-[570px] md:h-auto overflow-x-hidden"
       >
         {visibleCards.map((card) => {
           const isActive = activeCard === card.id;
@@ -93,7 +89,7 @@ const Tenets = () => {
           return (
             <motion.div
               key={card.id}
-              whileHover={!isActive ? { y: -8, boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)" } : {}}
+              whileHover={!isActive ? {  boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)" } : {}}
               onClick={() => setActiveCard(card.id)}
               className={`cursor-pointer transition-all duration-500 overflow-hidden
               ${isActive ? "flex-[2.8] bg-white border border-borderMedium" : "flex-1 shadow-sm"}
