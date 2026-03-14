@@ -29,7 +29,7 @@ const offerings = [
     id: "digitization",
     menuTitle: "Digitization and Automation",
     title: "Digitization and Automation",
-    description: "Explore workflow efficiency, paperless solutions, automation-driven transformation, and frictionless business operations.",
+    description: "Achieve workflow efficiency, paperless transactions, automation-driven transformation, and frictionless business operations.",
      image: DigitizationAndAutomation,
     feature1: {
       icon: HiOutlineDocumentDuplicate,
@@ -42,20 +42,20 @@ const offerings = [
       list: ["Reduce operational cost", "Al-based workflow builder to remove manual tasks"]
     },
     stats: [
-      "Up to **30%-55%** reduction in billing, returns and exchange time.",
+      "Potential to achieve **30%-55%** reduction in billing, returns and exchange time.",
       "Reduction in queues and better store efficiency leading to higher **CSAT** and **ESAT**"
     ],
     impact: {
       icon: HiOutlineGlobeAlt,
       title: "Provide online experience for offline transactions.",
-      list: ["Customers can now experience convenience of online sale and post-sale transactions for offline shopping."]
+      list: ["Customers can now experience convenience of online sale and post-sale transactions irrespective offline shopping."]
     }
   },
   {
     id: "advocacy",
     menuTitle: "Customer Advocacy",
     title: "Customer Advocacy",
-    description: "Increase customer lifetime value by empowering advocacy, tracking referral growth, and leveraging loyal customer voices for business impact.",
+    description: "Increase customer lifetime value by empowering advocacy, tracking referral growth, and leveraging loyal customer.",
     image: CustomerAdvocacy,
     feature1: {
       icon: HiOutlineGift,
@@ -74,7 +74,7 @@ const offerings = [
     impact: {
       icon: HiOutlineUserGroup,
       title: "Measure advocacy impact.",
-      list: ["AI driven real-time customer sentiment", "Convert negative NPS to positive NPS and track the transition.", "Identify promoters, nurture brand champions, and reward impactful referrals."]
+      list: ["AI driven real-time customer sentiment", "Convert negative NPS to positive NPS and track the transition.", "Identify and nurture promoters and reward impactful referrals."]
     }
   },
   {
@@ -82,7 +82,7 @@ const offerings = [
     menuTitle: "Customer Service",
     title: "Customer Service",
     description1:"NxCx - an all-inclusive CX platform for the next-gen Al era.",
-    description: "Enhance customer satisfaction and loyalty with efficient service management and seamless support solutions.",
+    description: "Enhance customer satisfaction and loyalty with efficient service management and seamless support.",
      image: CustomerService,
     feature1: {
       icon: HiOutlinePhone,
@@ -177,6 +177,7 @@ const offerings = [
 
 const Offering = () => {
   const [activeId, setActiveId] = useState(offerings[0].id); // Default to Customer Advocacy
+  const tabsRef = React.useRef<HTMLDivElement>(null);
 
   const activeOffering = offerings.find(o => o.id === activeId) || offerings[1];
 
@@ -251,7 +252,7 @@ const Offering = () => {
             >
               {/* Mobile and Tablet Menu (Attractive horizontal tabs) */}
               <div className="flex lg:hidden flex-col w-full mb-8">
-                <div className="flex overflow-x-auto no-scrollbar pb-4 -mx-4 px-4 sticky top-0 bg-white z-20">
+                <div className="flex overflow-x-auto no-scrollbar pb-4 -mx-4 px-4 sticky top-0 bg-white z-20" ref={tabsRef}>
                   <div className="flex gap-3 min-w-max">
                     {offerings.map((offering) => {
                       const isActive = activeId === offering.id;
@@ -263,7 +264,13 @@ const Offering = () => {
                               ? "border-brandPurple bg-brandPurple/5 text-brandPurple shadow-sm" 
                               : "border-grayText/10 bg-white text-grayText/40 hover:border-grayText/30"
                           }`}
-                          onClick={() => setActiveId(offering.id)}
+                          onClick={(e) => {
+                            setActiveId(offering.id);
+                            if (tabsRef.current) {
+                              const target = e.target as HTMLDivElement;
+                              target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                            }
+                          }}
                           whileTap={{ scale: 0.95 }}
                         >
                           <span className="text-sm font-bold whitespace-nowrap">

@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   assetsInclude: ["**/*.HTML"],
   server: {
-    port: 5175,
+    port: 5174,
        host: true,
     strictPort: true,
     headers: {

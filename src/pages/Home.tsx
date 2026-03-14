@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { HiArrowDownTray } from "react-icons/hi2";
 import bg from "../assets/bg-pettern.png";
 import flash from "../assets/flash.png";
 import shoppingCart from "../assets/shopping-cart.png";
@@ -13,7 +14,7 @@ import homeCard2Bg from "../assets/home-card2-bg.png"
 import homeCard3Bg from "../assets/home-card3-bg.png"
 import homeCard4Bg from "../assets/home-card4-bg.png"
 import homeCard5Bg from "../assets/home-card5-bg.png"
-
+import ZXPbrochure from "../assets/ZXP-brochure.pdf"
 const cards = [
   {
     id: 0,
@@ -24,7 +25,8 @@ const cards = [
     image: homeCard1Bg,
     expandIcon: expand,
     pillText: "Build a brand. Not just make a sale.",
-    list: ["POS and every customer touch point thereafter, covering entire customer journey.", "POS and every customer touch point thereafter, covering entire customer journey."]
+    list: ["POS and every customer touch point thereafter, covering entire customer journey.", "Direct and personalized connect between you and your customer."
+    ]
   },
   {
     id: 1,
@@ -210,16 +212,32 @@ const Home = () => {
             </p>
           </motion.div>
 
-          {/* Button */}
-          <motion.button
+          {/* Buttons */}
+          <motion.div
             variants={itemVariants as any}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-brandPurple hover:bg-brandPurple/90 text-white font-bold text-lg py-3 px-6 md:px-12  rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
-            onClick={() => navigate("/contact")}
+            className="flex flex-col sm:flex-row gap-4"
           >
-            Request a Demo
-          </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-brandPurple hover:bg-brandPurple/90 text-white  text-lg py-3 px-6 md:px-12 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
+              onClick={() => navigate("/contact")}
+            >
+              Request a Demo
+            </motion.button>
+
+            <motion.a
+              href={ZXPbrochure}
+              download="ZXP-brochure.pdf"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center justify-center gap-2 bg-white border border-brandDark text-brandDark  text-lg py-3 px-6 md:px-10 rounded-full transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-1"
+            >
+              Download Brochure
+              <HiArrowDownTray className="w-5 h-5" />
+            </motion.a>
+          </motion.div>
+          
         </motion.div>
 
         {/* Decorative Icons */}
