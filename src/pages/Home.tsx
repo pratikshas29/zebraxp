@@ -220,7 +220,7 @@ const Home = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-brandPurple hover:bg-brandPurple/90 text-white  text-lg py-3 px-6 md:px-12 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
+              className="bg-brandPurple hover:bg-brandPurple/90 text-white  text-lg py-2 px-6 md:px-7 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
               onClick={() => navigate("/contact")}
             >
               Request a Demo
@@ -231,7 +231,7 @@ const Home = () => {
               download="ZXP-brochure.pdf"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center justify-center gap-2 bg-white border border-brandDark text-brandDark  text-lg py-3 px-6 md:px-10 rounded-full transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-1"
+              className="flex items-center justify-center gap-2 bg-white border border-brandDark text-brandDark  text-lg py-2 px-6 md:px-7 rounded-full transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-1"
             >
               Download Brochure
               <HiArrowDownTray className="w-5 h-5" />
@@ -300,7 +300,7 @@ const Home = () => {
       >
         <div
           ref={scrollerRef}
-          className="max-w-7xl mx-auto flex gap-4  p-4 min-h-[300px] overflow-x-auto no-scrollbar xl:overflow-visible snap-x snap-mandatory md:snap-none"
+          className="max-w-7xl mx-auto flex gap-2 sm:gap-4  p-4 min-h-[300px] overflow-x-auto no-scrollbar xl:overflow-visible snap-x snap-mandatory md:snap-none"
         >
 
       {cards.map((card) => {

@@ -1,0 +1,24 @@
+[[redirects]]
+  from = "/mysunar"
+  to = "http://103.192.199.169/mysunar"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/mysunar/"
+  to = "http://103.192.199.169/mysunar/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/mysunar/*"
+  to = "http://103.192.199.169/mysunar/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+

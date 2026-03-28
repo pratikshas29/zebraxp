@@ -1,6 +1,9 @@
 import React, {useState} from "react";
 import { motion } from "framer-motion";
 import attachment from "../assets/attachment.png";
+import { db } from "../lib/firebase";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import toast from "react-hot-toast";
 const Contact = () => {
 	const [input1, onChangeInput1] = useState('');
 	const [input2, onChangeInput2] = useState('');
@@ -8,6 +11,8 @@ const Contact = () => {
 	const [input4, onChangeInput4] = useState('');
 	const [input5, onChangeInput5] = useState('');
 	const [input6, onChangeInput6] = useState('');
+	const [submitting, setSubmitting] = useState(false);
+	
 
 	const containerVariants = {
 		hidden: { opacity: 0 },
@@ -41,9 +46,9 @@ const Contact = () => {
 			variants={containerVariants}
 		>
 			<div className="self-stretch bg-white">
-				<div className="grid grid-cols-1 lg:grid-cols-5 items-stretch max-w-7xl mx-auto px-4 md:px-6 gap-28 mb-14">
+				<div className="grid grid-cols-1 lg:grid-cols-5 items-stretch max-w-7xl mx-auto px-4 md:px-6 gap-10 mb-14">
 					<motion.div 
-						className="flex flex-col items-start  lg:col-span-2 h-full justify-between"
+						className="flex flex-col items-start  lg:col-span-3 h-full justify-between"
 						variants={containerVariants}
 					>
 						<div className="flex flex-col items-start mb-12 gap-6">
@@ -65,7 +70,7 @@ const Contact = () => {
 						</div>
 						<motion.div 
 							variants={itemVariants as any}
-							className="w-full flex flex-col items-start bg-brandPurple py-3.5 pl-6 pr-9 rounded-3xl mt-8" 
+							className="w-full flex flex-col md:w-[25rem] sm:w-full items-start bg-brandPurple py-3.5 pl-6 pr-9 rounded-3xl mt-8" 
 							style={{
 								boxShadow:"0px 0px 17px 0px #FFFFFF80 inset"
 							}}>
@@ -75,7 +80,7 @@ const Contact = () => {
 							<span className="text-white font-regular text-base mb-5">
 								Our team is happy to walk you through ZebraXP and answer your questions based on your business goals.
 							</span>
-							<motion.button 
+							{/* <motion.button 
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
 								className="flex flex-col items-start bg-brandYellow text-left py-3 px-6 md:px-8 rounded-full border-0"
@@ -83,12 +88,12 @@ const Contact = () => {
 								<span className="text-brandDark text-lg" >
 									Schedule a call
 								</span>
-							</motion.button>
+							</motion.button> */}
 						</motion.div>
 					</motion.div>
 
 					<motion.div 
-						className="flex flex-col bg-panelBg items-start p-5 md:p-7 rounded-3xl lg:col-span-3 h-full"
+						className="flex flex-col bg-panelBg items-start p-5 md:p-7 rounded-3xl lg:col-span-2 h-full"
 						variants={containerVariants}
 					>
 						<motion.span 
@@ -107,7 +112,7 @@ const Contact = () => {
 							variants={containerVariants}
 							className="self-stretch w-full  "
 						>
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+							<div className="grid grid-cols-1 md:grid-cols-1 gap-4 mb-6">
 								<motion.input
 									variants={itemVariants as any}
 									placeholder="Enter your name"
@@ -116,14 +121,14 @@ const Contact = () => {
 									type="text"
 									className="w-full text-brandDark bg-white text-base py-3.5 px-7 rounded-full border border-solid border-borderLight"
 								/>
-								<motion.input
+								{/* <motion.input
 									variants={itemVariants 	as any}
 									placeholder="Enter your industry"	
 									value={input2}
 									onChange={(event)=>onChangeInput2(event.target.value)}
 									type="text"
 									className="w-full text-brandDark bg-white text-base py-3.5 px-7 rounded-full border border-solid border-borderLight"
-								/>
+								/> */}
 								<motion.input
 									variants={itemVariants as any}
 									placeholder="Enter your email"
@@ -141,15 +146,15 @@ const Contact = () => {
 									maxLength={10}
 									className="w-full text-brandDark bg-white text-base py-3.5 px-7 rounded-full border border-solid border-borderLight"
 								/>
-								<motion.textarea
+								{/* <motion.textarea
 									variants={itemVariants as any}
 									placeholder="Describe your business"
 									value={input5}
 									onChange={(event)=>onChangeInput5(event.target.value)}
 									className="w-full md:col-span-2 text-brandDark bg-white text-base p-4 rounded-xl border border-solid border-borderLight min-h-[140px]"
-								/>
+								/> */}
 							</div>
-							<motion.label 
+							{/* <motion.label 
 								variants={itemVariants as any}
 								className="flex items-center self-stretch bg-white60 mb-6 rounded-xl border border-dashed border-borderMedium cursor-pointer"
 							>
@@ -165,18 +170,41 @@ const Contact = () => {
 									onChange={(event)=>onChangeInput6(event.target.files && event.target.files[0] ? event.target.files[0].name : '')}
 									className="hidden"
 								/>
-							</motion.label>
+							</motion.label> */}
 							<motion.div 
 								variants={itemVariants as any}
-								className="flex flex-col items-end self-stretch"
+								className="flex flex-col items-end self-stretch gap-3"
 							>
 								<motion.button 
 									whileHover={{ scale: 1.05 }}
 									whileTap={{ scale: 0.95 }}
-									className="flex flex-col items-start bg-brandPurple text-left  py-3 px-6 md:px-8  rounded-full border-0"
-									onClick={()=>alert("Pressed!")}>
+									className="flex flex-col items-start bg-brandPurple text-left  py-3 px-6 md:px-8  rounded-full border-0 disabled:opacity-60"
+									disabled={submitting}
+									onClick={async ()=>{
+										if(!input1 || !input3){
+											toast.error('Please enter your name and email.', { duration: 4000 });
+											return;
+										}
+										try{
+											setSubmitting(true);
+											await addDoc(collection(db, "contact_requests"),{
+												name: input1,
+												email: input3,
+												phone: input4,
+												createdAt: serverTimestamp()
+											});
+											toast.success('sent successfully.', { duration: 3000 });
+											onChangeInput1('');
+											onChangeInput3('');
+											onChangeInput4('');
+										}catch(err){
+											toast.error('Failed to send request. Please try again.', { duration: 4000 });
+										}finally{
+											setSubmitting(false);
+										}
+									}}>
 									<span className="text-white text-lg" >
-										Send Request
+										{submitting ? 'Sending…' : 'Send Request'}
 									</span>
 								</motion.button>
 							</motion.div>

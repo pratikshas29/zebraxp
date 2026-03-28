@@ -54,27 +54,38 @@ const AboutUs = () => {
 
 				{/* Section 1 */}
 				<motion.div
-					className="flex flex-col lg:flex-row items-start lg:items-center max-w-7xl mb-10 lg:mb-14 mx-auto px-5 gap-6 lg:gap-16"
+					className="grid grid-cols-1 lg:grid-cols-12 items-start max-w-7xl mb-10  mx-auto px-5 gap-3 lg:gap-12"
 					variants={containerVariants}
 				>
 					<motion.span
-						className="text-black text-2xl sm:text-3xl lg:text-4xl font-bold w-full lg:w-96 leading-8 lg:leading-[50px]"
+						className="text-black text-2xl sm:text-3xl lg:text-4xl font-bold w-full lg:col-span-4 leading-8 lg:leading-[50px]"
 						variants={itemVariants as any}
 					>
 						So how did <span className="text-brandYellow">ZebraXP</span> take shape?
+
 					</motion.span>
 
-					<motion.span
-						className="flex-1 text-brandDark text-sm sm:text-base leading-8 lg:leading-[30px]"
+					<motion.div
+						className="lg:col-span-8"
 						variants={itemVariants as any}
 					>
-						ZebraXP began with a simple idea: businesses needed a better way to connect their online systems with real-world operations. We set out to simplify everyday processes and create more consistent, connected customer experiences without adding complexity.
-					</motion.span>
+						<div className="text-brandDark font-bold mt-2 text-base sm:text-lg">
+							We call it the Zebra eXPerience. Why so?
+						</div>
+						<div className="text-grayText text-sm sm:text-base mt-4">
+							It matches with the principles we work with:
+						</div>
+						<ol className="list-decimal pl-4 space-y-0.5 text-brandDark text-sm sm:text-base mt-3 marker:font-bold marker:text-brandDark">
+							<li ><span className="font-bold">Transparency</span> - the black and white stripes represent transparency.</li>
+							<li><span className="font-bold">Uniqueness</span> - every stripe pattern is unique similar to human fingerprints.</li>
+							<li><span className="font-bold">Consistency</span> - even while unique, the pattern of black and white is consistent.</li>
+						</ol>
+					</motion.div>
 				</motion.div>
 
 				{/* Banner Image */}
 				<motion.div
-					className="max-w-7xl mx-auto px-5 w-full mb-10 lg:mb-16"
+					className="max-w-7xl mx-auto px-5 w-full mb-10 "
 					variants={imageVariants as any}
 				>
 					<img
@@ -86,7 +97,7 @@ const AboutUs = () => {
 
 				{/* Section 2 */}
 				<motion.div
-					className="flex flex-col lg:flex-row items-start lg:items-center max-w-7xl mb-10 lg:mb-16 mx-auto px-5 gap-8 lg:gap-16"
+					className="flex flex-col lg:flex-row items-start lg:items-center max-w-7xl mb-10  mx-auto px-5 gap-8 lg:gap-16"
 					initial="hidden"
 					whileInView="visible"
 					viewport={{ once: true, margin: "-100px" }}
