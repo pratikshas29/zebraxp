@@ -6,6 +6,7 @@ import Contact from './pages/Contact';
 import Tenets from './pages/Tenets';
 import Offering from './pages/Offering';
 import Layout from './pages/Layout';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/tenets" element={<Tenets />} />
         <Route path="/offering" element={<Offering />} />
       </Route>
+      <Route path="*" element={<NotFound />} />
         </Routes>
     </BrowserRouter>
   );
